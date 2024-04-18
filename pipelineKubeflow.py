@@ -1,8 +1,8 @@
 import kfp
 from kfp import dsl
-from MLOpsKubeflow.componentes.preprocesamiento1 import preprocesamiento1
-from MLOpsKubeflow.componentes.preprocesamiento2 import preprocesamiento2
-from MLOpsKubeflow.componentes.modeloScoring import modeloScoring
+from MLOpsKubeflow.python_scripts.preprocesamiento1 import preprocesamiento1
+from MLOpsKubeflow.python_scripts.preprocesamiento2 import preprocesamiento2
+from MLOpsKubeflow.python_scripts.modeloScoring import modeloScoring
 
 
 # Definir el pipeline principal

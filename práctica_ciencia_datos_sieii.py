@@ -53,7 +53,7 @@ from imblearn.over_sampling import SMOTE
 
 """Descargamos los datos de nuestro kaggle."""
 
-df = pd.read_csv('banana_quality.csv')
+df = pd.read_csv('data/banana_quality.csv')
 # https://www.kaggle.com/datasets/l3llff/banana?resource=download
 
 df
