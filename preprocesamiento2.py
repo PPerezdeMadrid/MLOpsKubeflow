@@ -3,9 +3,10 @@ import numpy as np
 
 df = pd.read_csv('XXXXXXXXXXXXXXXXX')
 
-# Añadimos una columna MES, Nota, Precio
-df['Mes'] = np.random.choice(['Marzo', 'Abril', 'Mayo'], size=len(df))
+# Añadimos una columna Nota, Precio
 df['NotaConsumidor'] = np.random.randint(0, 11, size=len(df))
+df['Temporada'] = np.random.randint(0, 2, size=len(df))
+df['Estacion'] = np.random.choice(['Primavera', 'Verano', 'Otoño', 'Invierno'], size=len(df))
 
 
 
