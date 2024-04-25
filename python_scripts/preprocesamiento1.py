@@ -3,9 +3,7 @@ def preprocesamiento1(df):
     import pandas as pd
     from sklearn.preprocessing import StandardScaler, LabelEncoder
 
-    df = "" # Importar de generarModelo.py
-
-    # Escalar características
+    # Escalar caracteristicas
     scaler = StandardScaler()
     # df_mid = df.drop('Quality', axis=1).scale().as_data_frame()
     scaler.fit(df.drop('Quality', axis=1))
