@@ -3,16 +3,30 @@
 # Carpeta actual
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-# Build para modeloScoring
-echo "Building modeloScoring..."
-docker build -t modelo_scoring_image "$CURRENT_DIR/modeloScoring"
+# GCP project ID
+PROJECT_ID="your-project-id" # EL DE ORIANNA QUE LO ESTAMOS HACIENDO ES SU ORDENADOR
 
-# Build para preprocesamiento1
-echo "Building preprocesamiento1..."
-docker build -t preprocesamiento1_image "$CURRENT_DIR/preprocesamiento1"
+# Región para el Artifact Registry
+REGION="europe-west2"
 
-# Build para preprocesamiento2
-echo "Building preprocesamiento2..."
-docker build -t preprocesamiento2_image "$CURRENT_DIR/preprocesamiento2"
+# Registro en Artifact Registry
+ARTIFACT_REGISTRY="${REGION}-docker.pkg.dev/${PROJECT_ID}"
 
-echo "Builds completadas."
+# Función para construir y subir una imagen Docker a Artifact Registry
+build_and_push_image() {
+  local node=$1
+  echo "Building $node..."
+  docker build -t "$ARTIFACT_REGISTRY/$node:latest" "$CURRENT_DIR/$node"
+  echo "Pushing $node to Artifact Registry..."
+  docker push "$ARTIFACT_REGISTRY/$node:latest"
+}
+
+# Lista de nodos
+nodes=("modeloScoring" "preprocesamiento1" "preprocesamiento2")
+
+# Construir y subir cada imagen Docker
+for node in "${nodes[@]}"; do
+  build_and_push_image "$node"
+done
+
+echo "Builds y push a Artifact Registry completados."

@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: preprocesamiento1-
+spec:
+  entrypoint: preprocesamiento1
+  templates:
+  - name: preprocesamiento1
+    steps:
+    - - name: download-csv
+        template: download-csv
+    - - name: process-csv
+        template: process-csv
+        arguments:
+          artifacts:
+          - name: processed-data
+            from: "{{steps.download-csv.outputs.artifacts.csv-data}}"
+  - name: download-csv
+    inputs:
+      parameters:
+      - name: bucket-path
+    outputs:
+      artifacts:
+      - name: csv-data
+        path: /mnt/data.csv
+    container:
+      image: preprocesamiento1-image:latest
+      command: ["python", "preprocesamiento1.py"]
+      args: ["--bucket-path", "{{inputs.parameters.bucket-path}}"]
+  - name: process-csv
+    inputs:
+      artifacts:
+      - name: csv-data
+        path: /mnt/data.csv
+    container:
+      image: preprocesamiento1-image:latest
+      command: ["python", "preprocesamiento1.py"]

@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: preprocesamiento2-
+spec:
+  entrypoint: preprocesamiento2
+  templates:
+  - name: preprocesamiento2
+    steps:
+    - - name: read-data
+        template: read-data
+    - - name: process-data
+        template: process-data
+        arguments:
+          artifacts:
+          - name: processed-data
+            from: "{{steps.read-data.outputs.artifacts.processed-data}}"
+  - name: read-data
+    inputs:
+      artifacts:
+      - name: processed-data
+        path: /mnt/processed_data.csv
+    container:
+      image: preprocesamiento2-image:latest
+      command: ["python", "preprocesamiento2.py"]
+  - name: process-data
+    inputs:
+      artifacts:
+      - name: processed-data
+        path: /mnt/processed_data.csv
+    container:
+      image: preprocesamiento2-image:latest
+      command: ["python", "preprocesamiento2.py"]
