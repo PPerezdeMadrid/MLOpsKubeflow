@@ -1,0 +1,13 @@
+name: preprocesamiento1
+description: Preprocesamiento 1
+inputs:
+- {name: df, type: DataFrame, description: 'DataFrame de entrada'} #en el pipeline recibe un csv, lo cambiamos?
+outputs:
+- {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
+implementation:
+  container:
+    image: <IMAGE_NAME> #cambiar
+    command: [
+      python3, /pipeline/preprocesamiento1.py
+    ]
+
