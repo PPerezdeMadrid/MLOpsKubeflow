@@ -1,5 +1,5 @@
-name: preprocesamiento1
-description: Preprocesamiento 1
+name: preprocesamiento2
+description: Preprocesamiento 2
 inputs:
 - {name: df, type: DataFrame, description: 'DataFrame de entrada'}
 outputs:
@@ -8,5 +8,5 @@ implementation:
   container:
     image: <IMAGE_NAME>
     command: [
-      python3, /pipeline/preprocesamiento1.py
+      python3, /pipeline/preprocesamiento2.py
     ]

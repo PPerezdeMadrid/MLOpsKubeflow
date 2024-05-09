@@ -4,8 +4,10 @@ import pandas as pd
 from kfp import dsl, components as comp
 
 def modeloScoring(df: pd.DataFrame, mes: int) -> pd.DataFrame:
+    df_mes = df[df['Mes'] == mes].copy()
+    
     h2o.init()
-    data = h2o.H2OFrame(df)
+    data = h2o.H2OFrame(df_mes)
 
     # Creacion de subconjuntos
     predictors = ["Precio", "NotaConsumidor", "Size", "Weight", "Sweetness", "Softness", "HarvestTime", "Ripeness", "Acidity"]

@@ -1,13 +1,13 @@
-name: preprocesamiento1
-description: Preprocesamiento 1
+name: modeloscoring
+description: Modelo Scoring
 inputs:
 - {name: df, type: DataFrame, description: 'DataFrame de entrada'}
+- {name: mes, type: Integer, description: 'Mes de los datos'}
 outputs:
-- {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
+- {name: output, type: DataFrame, description: 'DataFrame de predicciones'}
 implementation:
   container:
-    image: <IMAGE_NAME> #cambiar
+    image: <IMAGE_NAME>
     command: [
-      python3, /pipeline/preprocesamiento1.py
+      python3, /pipeline/modeloscoring.py
     ]
-

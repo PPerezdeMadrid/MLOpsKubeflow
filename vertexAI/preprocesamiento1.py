@@ -1,8 +1,13 @@
 from typing import NamedTuple
-import kfp.components as comp
+#import kfp.components as comp
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from kfp.v2.dsl import component
 
+@component(
+    base_image="python:3.10", 
+    #packages_to_install=['pandas', 'sklearn']
+)
 def preprocesamiento1(df: pd.DataFrame) -> pd.DataFrame:
     # Escalar características
     scaler = StandardScaler()
@@ -26,4 +31,4 @@ def preprocesamiento1(df: pd.DataFrame) -> pd.DataFrame:
 
     return df_transformado
 
-preprocesamiento_component = comp.func_to_container_op(preprocesamiento1, packages_to_install=['pandas', 'sklearn'])
+# preprocesamiento_component = comp.func_to_container_op(preprocesamiento1, packages_to_install=['pandas', 'sklearn'])
