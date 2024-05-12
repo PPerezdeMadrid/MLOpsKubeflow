@@ -1,0 +1,12 @@
+name: preprocesamiento2
+description: Preprocesamiento 2
+inputs:
+- {name: df, type: DataFrame, description: 'DataFrame de entrada'}
+outputs:
+- {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
+implementation:
+  container:
+    image: imagen_pre2:latest
+    command: [
+      python3, preprocesamiento2.py #realmente no se donde esta
+    ]

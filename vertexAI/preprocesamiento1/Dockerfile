@@ -1,12 +1,12 @@
-name: preprocesamiento2
-description: Preprocesamiento 2
+name: preprocesamiento1
+description: Preprocesamiento 1
 inputs:
 - {name: df, type: DataFrame, description: 'DataFrame de entrada'}
 outputs:
 - {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
 implementation:
   container:
-    image: <IMAGE_NAME>
+    image: imagen_pre1:latest
     command: [
-      python3, /pipeline/preprocesamiento2.py
+      python3, preprocesamiento1.py
     ]

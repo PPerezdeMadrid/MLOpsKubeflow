@@ -4,9 +4,8 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from kfp.v2.dsl import component
 
-@component(
-    base_image="python:3.10", 
-    #packages_to_install=['pandas', 'sklearn']
+@dsl.component(
+    base_image="imagen_pre1"
 )
 def preprocesamiento1(df: pd.DataFrame) -> pd.DataFrame:
     # Escalar características

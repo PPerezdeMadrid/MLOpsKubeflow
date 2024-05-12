@@ -1,9 +1,8 @@
-from typing import NamedTuple
 import kfp
 from kfp import dsl
 from kfp.components import InputPath, OutputPath
-from preprocesamiento1 import preprocesamiento_component
-from preprocesamiento2 import preprocesamiento2_component
+from MLOpsKubeflow.vertexAI.preprocesamiento1.preprocesamiento1 import preprocesamiento_component
+from MLOpsKubeflow.vertexAI.preprocesamiento2.preprocesamiento2 import preprocesamiento2_component
 from modeloscoring import modeloscoring_component
 from kfp.gcp import components as gcp_components
 

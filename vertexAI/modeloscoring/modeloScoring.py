@@ -3,6 +3,9 @@ from h2o.estimators import H2OXGBoostEstimator
 import pandas as pd
 from kfp import dsl, components as comp
 
+@component(
+    base_image="imagen_modelo_scoring:latest",
+)
 def modeloScoring(df: pd.DataFrame, mes: int) -> pd.DataFrame:
     df_mes = df[df['Mes'] == mes].copy()
     

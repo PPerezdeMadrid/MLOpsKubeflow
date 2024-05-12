@@ -6,8 +6,7 @@ outputs:
 - {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
 implementation:
   container:
-    image: <IMAGE_NAME>
+    image: imagen_pre1:latest
     command: [
-      python3, /pipeline/preprocesamiento1.py
+      python3, preprocesamiento1.py
     ]
-

@@ -1,0 +1,12 @@
+FROM python:3.9
+
+WORKDIR /app
+
+COPY python_scripts/modeloscoring.py /app
+COPY MLOpsKubeflow/requirements.txt /app
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python3", "modeloscoring.py"]
+
+

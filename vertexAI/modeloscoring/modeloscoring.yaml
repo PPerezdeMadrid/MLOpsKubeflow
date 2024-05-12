@@ -7,7 +7,8 @@ outputs:
 - {name: output, type: DataFrame, description: 'DataFrame de predicciones'}
 implementation:
   container:
-    image: <IMAGE_NAME>
+    image: imagen_modeloscoring:latest
     command: [
-      python3, /pipeline/modeloscoring.py
+      python3, modeloscoring.py
     ]
+

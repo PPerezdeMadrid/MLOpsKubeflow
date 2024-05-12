@@ -6,8 +6,7 @@ from kfp import components
 from kfp.v2.dsl import component
 
 @component(
-    #base_image="python:3.11",
-    packages_to_install=['numpy'],
+    base_image="imagen_pre2:latest",
 )
 def preprocesamiento2(df):
     # Añadimos una columna Nota, Temporada, Estacion
