@@ -8,5 +8,8 @@ implementation:
   container:
     image: imagen_pre1:latest
     command: [
-      python3, preprocesamiento1.py
+      python3, preprocesamiento1.py,
+      --df, {inputValue: df},
+      --output, {outputPath: output} # Path aunq sea value (lo pone en los apuntes)
     ]
+

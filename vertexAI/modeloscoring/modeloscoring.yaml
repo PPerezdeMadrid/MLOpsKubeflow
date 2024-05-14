@@ -3,12 +3,13 @@ description: Modelo Scoring
 inputs:
 - {name: df, type: DataFrame, description: 'DataFrame de entrada'}
 - {name: mes, type: Integer, description: 'Mes de los datos'}
-outputs:
-- {name: output, type: DataFrame, description: 'DataFrame de predicciones'}
+- {name: ruta_bucket_csv, type: String, description: 'Ruta del bucket para guardar el archivo CSV de salida'}
 implementation:
   container:
     image: imagen_modeloscoring:latest
     command: [
-      python3, modeloscoring.py
+      python3, modeloscoring.py,
+      --df, {inputValue: df},
+      --mes, {inputValue: mes},
+      --ruta_bucket_csv, {inputValue: ruta_bucket_csv}
     ]
-

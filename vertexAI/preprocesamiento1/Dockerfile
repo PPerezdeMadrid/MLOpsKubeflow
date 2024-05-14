@@ -1,12 +1,14 @@
-name: preprocesamiento1
-description: Preprocesamiento 1
-inputs:
-- {name: df, type: DataFrame, description: 'DataFrame de entrada'}
-outputs:
-- {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
-implementation:
-  container:
-    image: imagen_pre1:latest
-    command: [
-      python3, preprocesamiento1.py
-    ]
+# Usa una imagen de Python como base
+FROM python:3.10-slim
+
+# Establece el directorio de trabajo en /app
+WORKDIR /app
+
+# Copia el código actual al contenedor en /app
+COPY preprocesamiento1.py .
+
+# Instala las dependencias de Python
+RUN pip install --no-cache-dir pandas scikit-learn kfp
+
+# Define el comando por defecto para ejecutar tu aplicación
+CMD ["python", "preprocesamiento1.py"]

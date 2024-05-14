@@ -1,27 +1,22 @@
+from typing import NamedTuple
 import kfp
 from kfp import dsl
 from kfp.components import InputPath, OutputPath
-from MLOpsKubeflow.vertexAI.preprocesamiento1.preprocesamiento1 import preprocesamiento_component
-from MLOpsKubeflow.vertexAI.preprocesamiento2.preprocesamiento2 import preprocesamiento2_component
+from preprocesamiento1 import preprocesamiento_component
+from preprocesamiento2 import preprocesamiento2_component
 from modeloscoring import modeloscoring_component
 from kfp.gcp import components as gcp_components
 
 input_bucket = 'gs://kubeflow-bucket-prueba'
 input_csv_file = 'archivo_inputs.csv'
 
-"""
-Problemillas que veo:
-- como inciar el pipeline
-- Añadir un input de "mes" para modeloScoring.py
-- Hay que hacer los dockerfile y añadir la imagen al yaml
-"""
 @dsl.pipeline(
     name='Preprocesamiento Pipeline',
     description='Pipeline para preprocesar datos'
 )
 def pipeline_completo(
-        input_csv: InputPath('CSV'),
-        output_csv: OutputPath('CSV')
+    input_csv: InputPath('CSV'),
+    output_csv: OutputPath('CSV')
 ):
     # Leer el CSV de entrada
     read_csv_op = gcp_components.load_file(
@@ -31,7 +26,7 @@ def pipeline_completo(
 
     # Ejecutar el componente de preprocesamiento 1
     preprocesamiento_op = preprocesamiento_component(read_csv_op.output)
-
+    
     # Ejecutar el segundo componente de preprocesamiento
     preprocesamiento2_op = preprocesamiento2_component(preprocesamiento_op.output)
 
@@ -48,7 +43,6 @@ def pipeline_completo(
     # Definir dependencias entre operaciones
     save_csv_op.after(preprocesamiento_op)
 
-
 # Crear una instancia del cliente de KFP para interactuar con el Kubeflow Pipelines en GCP
 client = kfp.Client()
 
@@ -60,3 +54,5 @@ client.create_run_from_pipeline_func(
         'output_csv': 'gs://kubeflow-bucket-prueba/scoring.csv'
     }
 )
+
+
