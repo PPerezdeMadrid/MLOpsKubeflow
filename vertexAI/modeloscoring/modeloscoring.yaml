@@ -1,7 +1,7 @@
 name: modeloscoring
 description: Modelo Scoring
 inputs:
-- {name: df, type: DataFrame, description: 'DataFrame de entrada'}
+- {name: input_csv_path, type: InputPath, description: 'Ruta del archivo CSV de entrada'}
 - {name: mes, type: Integer, description: 'Mes de los datos'}
 - {name: ruta_bucket_csv, type: String, description: 'Ruta del bucket para guardar el archivo CSV de salida'}
 implementation:
@@ -9,7 +9,7 @@ implementation:
     image: imagen_modeloscoring:latest
     command: [
       python3, modeloscoring.py,
-      --df, {inputValue: df},
+      --input_csv_path, {inputPath: input_csv_path},
       --mes, {inputValue: mes},
       --ruta_bucket_csv, {inputValue: ruta_bucket_csv}
     ]

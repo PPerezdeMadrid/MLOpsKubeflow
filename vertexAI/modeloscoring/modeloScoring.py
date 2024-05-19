@@ -7,7 +7,7 @@ from kfp import dsl, components
     base_image="imagen_modelo_scoring:latest", # package to install
 )
 
-def modeloScoring(df: pd.DataFrame, mes: int, ruta_bucket_csv: str) -> pd.DataFrame:
+def modeloScoring(input_csv_path: str, mes: int, ruta_bucket_csv: str):
     df_mes = df[df['Mes'] == mes].copy()
     
     h2o.init()
@@ -39,4 +39,11 @@ def modeloScoring(df: pd.DataFrame, mes: int, ruta_bucket_csv: str) -> pd.DataFr
     ruta_completa = f"{ruta_bucket_csv}/{nombre_archivo_csv}"
     pred_df.to_csv(ruta_completa, index=False)
 
-# modeloscoring_component = comp.func_to_container_op(modeloScoring, packages_to_install=['pandas', 'h2o'])
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Modelo de Scoring')
+    parser.add_argument('--input_csv_path', type=str, required=True, help='Ruta del archivo CSV de entrada')
+    parser.add_argument('--mes', type=int, required=True, help='Mes de los datos')
+    parser.add_argument('--ruta_bucket_csv', type=str, required=True, help='Ruta del bucket para guardar el archivo CSV de salida')
+    args = parser.parse_args()
+    modeloScoring(args.input_csv_path, args.mes, args.ruta_bucket_csv)

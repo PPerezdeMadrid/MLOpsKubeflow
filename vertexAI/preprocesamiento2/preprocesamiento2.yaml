@@ -1,14 +1,14 @@
 name: preprocesamiento2
 description: Preprocesamiento 2
 inputs:
-- {name: df, type: DataFrame, description: 'DataFrame de entrada'}
+- {name: input_path, type: InputPath, description: 'Path del archivo CSV de entrada'}
 outputs:
-- {name: output, type: DataFrame, description: 'DataFrame preprocesado'}
+- {name: output_path, type: OutputPath, description: 'Path del archivo CSV preprocesado'}
 implementation:
   container:
     image: imagen_pre2:latest
     command: [
-      python3, preprocesamiento2.py, #realmente no se donde esta
-      --df, {inputValue: df},
-      --output, {outputPath: output} # Path aunq sea value (lo pone en los apuntes)
+      python3, /app/preprocesamiento2.py,
+      --input_path, {inputPath: input_path},
+      --output_path, {outputPath: output_path}
     ]

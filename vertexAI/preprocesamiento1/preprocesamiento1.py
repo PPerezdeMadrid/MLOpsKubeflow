@@ -1,15 +1,10 @@
-from kfp.dsl import  pipeline, component, Artifact, Dataset, Input, Metrics, Model, Output, InputPath, OutputPath 
-from kfp import dsl
 import pandas as pd
+import argparse
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 
+def preprocesamiento1(input_path: str, output_path: str):
+    df = pd.read_csv(input_path)
 
-@component(
-    base_image="imagen_pre1",
-    packages_to_install=['pandas', 'sklearn']
-)
-def preprocesamiento1(df: pd.DataFrame) -> pd.DataFrame:
-    import pandas as pd
-    from sklearn.preprocessing import StandardScaler, LabelEncoder
     # Escalar características
     scaler = StandardScaler()
     scaled_features = scaler.fit_transform(df.drop('Quality', axis=1))
@@ -30,7 +25,11 @@ def preprocesamiento1(df: pd.DataFrame) -> pd.DataFrame:
     upper_limit = q3 + 1.5 * iqr
     df_transformado = df_transformado[~((df_transformado < lower_limit) | (df_transformado > upper_limit)).any(axis=1)]
 
-    return df_transformado
+    df_transformado.to_csv(output_path, index=False)
 
-
-#preprocesamiento_component = preprocesamiento1.func_to_container_op(preprocesamiento1, base_image="imagen_pre1", packages_to_install=['pandas', 'sklearn'])
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Preprocesamiento de datos')
+    parser.add_argument('--input_path', type=str, required=True, help='Ruta del archivo CSV de entrada')
+    parser.add_argument('--output_path', type=str, required=True, help='Ruta del archivo CSV de salida')
+    args = parser.parse_args()
+    preprocesamiento1(args.input_path, args.output_path)
